@@ -61,7 +61,56 @@
     <p id="message"></p>
 
     <script>
-        const wordList = ["apple", "grape", "lemon", "peach", "berry"];
+        // Full 5-letter word list from your provided input
+        const wordList = [
+            "aahed", "aalii", "aargh", "abaca", "abaci", "aback", "abaft", "abamp", "abase", "abash", 
+            "abate", "abaya", "abbas", "abbes", "abbey", "abbot", "abeam", "abele", "abets", "abhor", 
+            "abide", "abies", "abler", "ables", "abmho", "abode", "abohm", "aboil", "aboon", "abort", 
+            "about", "above", "abrin", "abris", "abuna", "abuse", "abuts", "abuzz", "abyes", "abysm", 
+            "abyss", "acais", "acari", "accra", "acerb", "ached", "achee", "aches", "achoo", "acids", 
+            "acidy", "acing", "acini", "ackee", "ackey", "acles", "acmes", "acmic", "acned", "acnes", 
+            "acock", "acold", "acorn", "acred", "acres", "acrid", "acron", "acted", "actin", "acton", 
+            "actor", "actos", "acute", "adage", "adapt", "adats", "addax", "added", "adder", "addio", 
+            "addle", "adeem", "adept", "adieu", "adios", "adits", "adman", "admen", "admin", "admit", 
+            "admix", "adobe", "adobo", "adopt", "adorb", "adore", "adorn", "adown", "adoze", "adret", 
+            "adsum", "adult", "adunc", "adust", "adyta", "adzed", "adzes", "aecia", "aedes", "aegis", 
+            "aeons", "aerie", "aescs", "aesir", "aetat", "affix", "afire", "afoot", "afore", "afoul", 
+            "afrit", "after", "again", "agals", "agama", "agamy", "agape", "agars", "agata", "agate", 
+            "agave", "agaze", "agbas", "ageds", "agent", "agers", "agger", "aggie", "aggro", "aghas", 
+            "agile", "aging", "agios", "agist", "agita", "aglet", "agley", "aglow", "agmas", "agnel", 
+            "agone", "agony", "agora", "agree", "agues", "agura", "ahead", "ahkio", "ahold", "aholt", 
+            "ahull", "aided", "aider", "aides", "ailed", "aimak", "aimed", "aimer", "aioli", "aired", 
+            "airth", "airts", "aisle", "aitch", "ajiva", "ajuga", "akala", "akebi", "akees", "akela", 
+            "akene", "aking", "akita", "alack", "alala", "alamo", "alapa", "alarm", "alary", "alate", 
+            "albas", "album", "alcid", "alder", "aldms", "aldol", "alecs", "aleph", "alert", "alfas", 
+            "algae", "algal", "algid", "algin", "algum", "alias", "alibi", "alien", "alifs", "align", 
+            "alike", "aline", "alist", "alive", "alkyd", "alkyl", "allay", "alley", "allod", "allot", 
+            "allow", "alloy", "allyl", "almah", "almas",             "baaed", "babas", "babel", "babes", "babka", "baboo", "babul", "babus", "bacca", "baccy", 
+            "backs", "bacne", "bacon", "baddy", "badge", "badly", "baeer", "baels", "baffs", "baffy", 
+            "bagel", "baggy", "bahts", "bahut", "bails", "baire", "bairn", "baisa", "baith", "baits", 
+            "baiza", "baize", "baked", "baker", "bakes", "balao", "balas", "balds", "baldy", "baled", 
+            "baler", "bales", "balks", "balky", "balls", "bally", "balms", "balmy", "balon", "balop", 
+            "balsa", "balun", "bamas", "banal", "banco", "bancs", "banda", "bands", "bandy", "banes", 
+            "bangs", "bania", "banjo", "banks", "banns", "banon", "bants", "barba", "barbe", "barbs", 
+            "barbu", "barde", "bardo", "bards", "bardy", "bared", "barer", "bares", "barfs", "barge", 
+            "baric", "barks", "barky", "barms", "barmy", "barns", "baron", "barre", "barye", "basad", 
+            "basal", "based", "baser", "bases", "basic", "basil", "basin", "basis", "basks", "bason", 
+            "bassi", "basso", "bassy", "basta", "baste", "basts", "batch", "bated", "bates", "bathe", 
+            "baths", "batik", "baton", "batts", "batty", "bauds", "baulk", "bavin", "bawds", "bawdy", 
+            "bawls", "bawns", "bayas", "bayed", "bayos", "bayou", "bazar", "beach", "beads", "beady", 
+            "beaks", "beaky", "beams", "beamy", "beano", "beans", "beard", "bears", "beast", "beats", 
+            "beaus", "beaut", "beaux", "bebop", "beche", "becks", "bedew", "bedim", "beech", "beedi", 
+            "beefs", "beefy", "beeks", "beeps", "beers", "beery", "beets", "befit", "befog", "began", 
+            "begar", "begat", "begem", "beget", "begin", "begot", "begum", "begun", "beige", "being", 
+            "bejel", "belah", "belay", "belch", "belga", "belie", "belle", "bells", "belly", "belon", 
+            "below", "belts", "bemas", "bench", "bends", "bendy", "benne", "benny", "bento", "bents", 
+            "benzo", "beret", "bergs", "berme", "berms", "berry", "berth", "beryl", "beses", "beset", 
+            "besom", "besot", "bests", "betas", "betel", "beths", "betta", "betty", "bevel", "bezel", 
+            "bhang", "bhoot", "bhuts", "bialy", "bibbs", "bible", "bibls", "bicep", "bices", "biddy", 
+            "bided", "bider", "bides", "bidet", "bidis"
+        ];
+
+        // Select a random word from the word list
         const wordToGuess = wordList[Math.floor(Math.random() * wordList.length)];
         let attemptCount = 0;
 
