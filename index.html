@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 50px);
+            grid-gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .cell {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .cell.correct {
+            background-color: green;
+            color: white;
+        }
+        .cell.present {
+            background-color: yellow;
+            color: white;
+        }
+        .cell.absent {
+            background-color: gray;
+            color: white;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 20px;
+            margin-bottom: 20px;
+            width: 100px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wordle Game</h1>
+    <div class="grid" id="grid"></div>
+    <input type="text" id="guessInput" maxlength="5" placeholder="Enter Guess" />
+    <button onclick="submitGuess()">Submit Guess</button>
+    <p id="message"></p>
+
+    <script>
+        const wordList = ["apple", "grape", "lemon", "peach", "berry"];
+        const wordToGuess = wordList[Math.floor(Math.random() * wordList.length)];
+        let attemptCount = 0;
+
+        // Create an empty grid for the guesses
+        function createGrid() {
+            const gridElement = document.getElementById("grid");
+            for (let i = 0; i < 6; i++) {
+                for (let j = 0; j < 5; j++) {
+                    const cell = document.createElement("div");
+                    cell.classList.add("cell");
+                    gridElement.appendChild(cell);
+                }
+            }
+        }
+
+        // Submit a guess
+        function submitGuess() {
+            const guessInput = document.getElementById("guessInput");
+            const guess = guessInput.value.toLowerCase();
+            if (guess.length !== 5 || !/^[a-z]+$/.test(guess)) {
+                alert("Please enter a valid 5-letter word.");
+                return;
+            }
+
+            // Check the guess and give feedback
+            const gridCells = document.getElementsByClassName("cell");
+            let index = attemptCount * 5;
+
+            for (let i = 0; i < 5; i++) {
+                const cell = gridCells[index + i];
+                if (guess[i] === wordToGuess[i]) {
+                    cell.classList.add("correct");
+                    cell.textContent = guess[i].toUpperCase();
+                } else if (wordToGuess.includes(guess[i])) {
+                    cell.classList.add("present");
+                    cell.textContent = guess[i].toUpperCase();
+                } else {
+                    cell.classList.add("absent");
+                    cell.textContent = guess[i].toUpperCase();
+                }
+            }
+
+            attemptCount++;
+
+            if (guess === wordToGuess) {
+                document.getElementById("message").textContent = "Congratulations! You guessed the word!";
+                disableInput();
+            } else if (attemptCount === 6) {
+                document.getElementById("message").textContent = `Game Over! The word was: ${wordToGuess}`;
+                disableInput();
+            }
+
+            guessInput.value = "";
+        }
+
+        // Disable input after the game ends
+        function disableInput() {
+            document.getElementById("guessInput").disabled = true;
+            document.querySelector("button").disabled = true;
+        }
+
+        createGrid();
+    </script>
+</body>
+</html>
